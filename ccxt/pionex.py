@@ -194,284 +194,284 @@ class pionex(Exchange, ImplicitAPI):
             },
         })
 
-    def fetch_markets(self, params={}) -> List[Market]:
-        response = self.publicGetSymbols(params)
-        #  { 
-        #   "data": {
-        #     "symbols":[
-        #       {
-        #         "symbol": "BTC_USDT",
-        #         "type": "SPOT",
-        #         "baseCurrency": "BTC",
-        #         "quoteCurrency": "USDT",
-        #         "basePrecision": 6,
-        #         "quotePrecision": 2,
-        #         "amountPrecision": 8,
-        #         "minAmount": "10",
-        #         "minTradeSize": "0.000001",
-        #         "maxTradeSize": "1000",
-        #         "minTradeDumping": "0.000001",
-        #         "maxTradeDumping": "100",
-        #         "enable": true,
-        #         "buyCeiling": "1.1",
-        #         "sellFloor": "0.9"
-        #       }
-        #     ]
-        #   },
-        #   "result": true,
-        #   "timestamp": 1566676132311
-        # }
-        #
-        #    {
-        #        "success": True,
-        #        "errorCode": "",
-        #        "message": "",
-        #        "result": [
-        #            {
-        #                "name": "ETH_BTC",
-        #                "stock": "ETH",
-        #                "money": "BTC",
-        #                "precision": {
-        #                    "money": "6",
-        #                    "stock": "4",
-        #                    "fee": "4"
-        #                },
-        #                "limits": {
-        #                    "min_amount": "0.001",
-        #                    "max_amount": "100000",
-        #                    "step_size": "0.0001",
-        #                    "min_price": "0.00001",
-        #                    "max_price": "922327",
-        #                    "tick_size": "0.00001",
-        #                    "min_total": "0.0001"
-        #                }
-        #            },
-        #            ...
-        #        ]
-        #    }
-        #
-        data = self.safe_value(response, 'data', {})
-        markets = self.safe_value(data, 'symbols', [])
-        return self.parse_markets(markets)
+    # def fetch_markets(self, params={}) -> List[Market]:
+    #     response = self.publicGetSymbols(params)
+    #     #  { 
+    #     #   "data": {
+    #     #     "symbols":[
+    #     #       {
+    #     #         "symbol": "BTC_USDT",
+    #     #         "type": "SPOT",
+    #     #         "baseCurrency": "BTC",
+    #     #         "quoteCurrency": "USDT",
+    #     #         "basePrecision": 6,
+    #     #         "quotePrecision": 2,
+    #     #         "amountPrecision": 8,
+    #     #         "minAmount": "10",
+    #     #         "minTradeSize": "0.000001",
+    #     #         "maxTradeSize": "1000",
+    #     #         "minTradeDumping": "0.000001",
+    #     #         "maxTradeDumping": "100",
+    #     #         "enable": true,
+    #     #         "buyCeiling": "1.1",
+    #     #         "sellFloor": "0.9"
+    #     #       }
+    #     #     ]
+    #     #   },
+    #     #   "result": true,
+    #     #   "timestamp": 1566676132311
+    #     # }
+    #     #
+    #     #    {
+    #     #        "success": True,
+    #     #        "errorCode": "",
+    #     #        "message": "",
+    #     #        "result": [
+    #     #            {
+    #     #                "name": "ETH_BTC",
+    #     #                "stock": "ETH",
+    #     #                "money": "BTC",
+    #     #                "precision": {
+    #     #                    "money": "6",
+    #     #                    "stock": "4",
+    #     #                    "fee": "4"
+    #     #                },
+    #     #                "limits": {
+    #     #                    "min_amount": "0.001",
+    #     #                    "max_amount": "100000",
+    #     #                    "step_size": "0.0001",
+    #     #                    "min_price": "0.00001",
+    #     #                    "max_price": "922327",
+    #     #                    "tick_size": "0.00001",
+    #     #                    "min_total": "0.0001"
+    #     #                }
+    #     #            },
+    #     #            ...
+    #     #        ]
+    #     #    }
+    #     #
+    #     data = self.safe_value(response, 'data', {})
+    #     markets = self.safe_value(data, 'symbols', [])
+    #     return self.parse_markets(markets)
 
-    def parse_market(self, market: dict) -> Market:
-        baseId = self.safe_string(market, 'baseCurrency')
-        quoteId = self.safe_string(market, 'quoteCurrency')
-        type = self.safe_string_lower(market, 'type')
-        spot = (type == 'spot')
-        return {
-            'id': baseId + '/' + quoteId,
-            'symbol': self.safe_string(market, 'symbol'),
-            'spot': spot,
-            'type': type,
-            'base': baseId,
-            'quote': quoteId,
-            'baseId': baseId,
-            'quoteId': quoteId,
-            'active': self.safe_string(market, 'enable'),
-            'maker': 0.0005,
-            'taker': 0.0005,
-            'limits': {
-                'amount': {
-                    'min': self.safe_number(market, 'minTradeSize'),
-                    'max': self.safe_number(market, 'maxTradeSize'),
-                },
-            },
-            'precision': {
-                'amount': self.safe_number(market, 'amountPrecision'),
-                'base': self.safe_number(market, 'basePrecision'),
-                'qoute': self.safe_number(market, 'quotePrecision'),
-            },
-            'info': market,
-        }
+    # def parse_market(self, market: dict) -> Market:
+    #     baseId = self.safe_string(market, 'baseCurrency')
+    #     quoteId = self.safe_string(market, 'quoteCurrency')
+    #     type = self.safe_string_lower(market, 'type')
+    #     spot = (type == 'spot')
+    #     return {
+    #         'id': baseId + '/' + quoteId,
+    #         'symbol': self.safe_string(market, 'symbol'),
+    #         'spot': spot,
+    #         'type': type,
+    #         'base': baseId,
+    #         'quote': quoteId,
+    #         'baseId': baseId,
+    #         'quoteId': quoteId,
+    #         'active': self.safe_string(market, 'enable'),
+    #         'maker': 0.0005,
+    #         'taker': 0.0005,
+    #         'limits': {
+    #             'amount': {
+    #                 'min': self.safe_number(market, 'minTradeSize'),
+    #                 'max': self.safe_number(market, 'maxTradeSize'),
+    #             },
+    #         },
+    #         'precision': {
+    #             'amount': self.safe_number(market, 'amountPrecision'),
+    #             'base': self.safe_number(market, 'basePrecision'),
+    #             'qoute': self.safe_number(market, 'quotePrecision'),
+    #         },
+    #         'info': market,
+    #     }
 
-    def fetch_trades(self, symbol: str, since: Int = None, limit: Int = None, params={}) -> List[Trade]:
-        self.load_markets()
-        market = self.market(symbol)
-        request: dict = {
-            'symbol': market['symbol'],
-            # 'limit': 100,     # default = 100, maximum = 500
-        }
-        if limit is not None:
-            request['limit'] = min(limit, 500) # default = 100, maximum = 500
-        response = None
-        response = self.publicGetTrades(self.extend(request, params))
-        data = self.safe_value(response, 'data', {})
-        trades = self.safe_value(data, 'trades', [])
-        return self.parse_trades(trades, market, since, limit)
+    # def fetch_trades(self, symbol: str, since: Int = None, limit: Int = None, params={}) -> List[Trade]:
+    #     self.load_markets()
+    #     market = self.market(symbol)
+    #     request: dict = {
+    #         'symbol': market['symbol'],
+    #         # 'limit': 100,     # default = 100, maximum = 500
+    #     }
+    #     if limit is not None:
+    #         request['limit'] = min(limit, 500) # default = 100, maximum = 500
+    #     response = None
+    #     response = self.publicGetTrades(self.extend(request, params))
+    #     data = self.safe_value(response, 'data', {})
+    #     trades = self.safe_value(data, 'trades', [])
+    #     return self.parse_trades(trades, market, since, limit)
 
-    def parse_trade(self, trade: dict, market: Market = None) -> Trade:
-        # { 
-        # "data": {
-        #     "trades": [
-        #     {
-        #         "symbol": "BTC_USDT",
-        #         "tradeId": "600848671",
-        #         "price": "7962.62",
-        #         "size": "0.0122",
-        #         "side": "BUY",
-        #         "timestamp": 1566691672311
-        #     },
-        #     {
-        #         "symbol": "BTC_USDT",
-        #         "tradeId": "600848670",
-        #         "price": "7960.12",
-        #         "size": "0.0198",
-        #         "side": "BUY",
-        #         "timestamp": 1566691672311
-        #     }
-        #     ]
-        # },
-        # "result": true,
-        # "timestamp": 1566691672311
-        # }
-        return self.safe_trade({
-            'type': self.safe_string_lower(market, 'type'),
-            'info': trade,
-            'timestamp': self.safe_integer(trade, 'timestamp'),
-            'id': self.safe_string(trade, 'tradeId'),
-            'symbol': self.safe_string(trade, 'symbol'),
-            'side': self.safe_string_lower(trade, 'side'),
-            'price': self.safe_string(trade, 'price'),
-            'amount': self.safe_string(trade, 'size'),
-        }, market)
+    # def parse_trade(self, trade: dict, market: Market = None) -> Trade:
+    #     # { 
+    #     # "data": {
+    #     #     "trades": [
+    #     #     {
+    #     #         "symbol": "BTC_USDT",
+    #     #         "tradeId": "600848671",
+    #     #         "price": "7962.62",
+    #     #         "size": "0.0122",
+    #     #         "side": "BUY",
+    #     #         "timestamp": 1566691672311
+    #     #     },
+    #     #     {
+    #     #         "symbol": "BTC_USDT",
+    #     #         "tradeId": "600848670",
+    #     #         "price": "7960.12",
+    #     #         "size": "0.0198",
+    #     #         "side": "BUY",
+    #     #         "timestamp": 1566691672311
+    #     #     }
+    #     #     ]
+    #     # },
+    #     # "result": true,
+    #     # "timestamp": 1566691672311
+    #     # }
+    #     return self.safe_trade({
+    #         'type': self.safe_string_lower(market, 'type'),
+    #         'info': trade,
+    #         'timestamp': self.safe_integer(trade, 'timestamp'),
+    #         'id': self.safe_string(trade, 'tradeId'),
+    #         'symbol': self.safe_string(trade, 'symbol'),
+    #         'side': self.safe_string_lower(trade, 'side'),
+    #         'price': self.safe_string(trade, 'price'),
+    #         'amount': self.safe_string(trade, 'size'),
+    #     }, market)
 
-    def fetch_order_book(self, symbol: str, limit: Int = None, params={}) -> OrderBook:
-        self.load_markets()
-        market = self.market(symbol)
-        request: dict = {
-            'symbol': market['symbol'],
-            # 'limit': 20,     # default = 20, maximum = 1000
-        }
-        if limit is not None:
-            request['limit'] = min(limit, 1000) # default = 20, maximum = 1000
-        response = self.publicGetDepth(self.extend(request, params))
-        # { 
-        # "data": {
-        #     "bids": [
-        #         ["29658.37", "0.0123"],
-        #         ["29658.35", "1.1234"],
-        #         ["29657.99", "2.2345"],
-        #         ["29657.56", "6.3456"],
-        #         ["29656.13", "8.4567"]
-        #     ],
-        #     "asks": [
-        #         ["29658.47", "0.0345"],
-        #         ["29658.65", "1.0456"],
-        #         ["29658.89", "3.5567"],
-        #         ["29659.43", "5.2678"],
-        #         ["29659.98", "1.9789"]
-        #     ]，
-        #     "updateTime": 1566676132311
-        # },
-        # "result": true,
-        # "timestamp": 1566691672311
-        # }
-        orderBook = self.safe_dict(response, 'data', {})
-        return self.parse_order_book(orderBook, market['symbol'], None, 'bids', 'asks')
+    # def fetch_order_book(self, symbol: str, limit: Int = None, params={}) -> OrderBook:
+    #     self.load_markets()
+    #     market = self.market(symbol)
+    #     request: dict = {
+    #         'symbol': market['symbol'],
+    #         # 'limit': 20,     # default = 20, maximum = 1000
+    #     }
+    #     if limit is not None:
+    #         request['limit'] = min(limit, 1000) # default = 20, maximum = 1000
+    #     response = self.publicGetDepth(self.extend(request, params))
+    #     # { 
+    #     # "data": {
+    #     #     "bids": [
+    #     #         ["29658.37", "0.0123"],
+    #     #         ["29658.35", "1.1234"],
+    #     #         ["29657.99", "2.2345"],
+    #     #         ["29657.56", "6.3456"],
+    #     #         ["29656.13", "8.4567"]
+    #     #     ],
+    #     #     "asks": [
+    #     #         ["29658.47", "0.0345"],
+    #     #         ["29658.65", "1.0456"],
+    #     #         ["29658.89", "3.5567"],
+    #     #         ["29659.43", "5.2678"],
+    #     #         ["29659.98", "1.9789"]
+    #     #     ]，
+    #     #     "updateTime": 1566676132311
+    #     # },
+    #     # "result": true,
+    #     # "timestamp": 1566691672311
+    #     # }
+    #     orderBook = self.safe_dict(response, 'data', {})
+    #     return self.parse_order_book(orderBook, market['symbol'], None, 'bids', 'asks')
 
-    def fetch_ohlcv(self, symbol: str, timeframe='1m', since: Int = None, limit: Int = None, params={}) -> List[list]:
-        self.load_markets()
-        market = self.market(symbol)
-        parsedTimeframe = self.safe_string(self.timeframes, timeframe)
-        request: dict = {
-            'symbol': market['symbol'],
-        }
-        if parsedTimeframe is not None:
-            request['interval'] = parsedTimeframe
-        else:
-            request['interval'] = timeframe
-        if limit is None:
-            limit = 100  # max = 500
-        else:
-            limit = min(500, limit)
-        # {
-        # "result": true,
-        # "data": {
-        #     "klines": [
-        #     {
-        #         "time": 1691649240000,
-        #         "open": "1851.27",
-        #         "close": "1851.32",
-        #         "high": "1851.32",
-        #         "low": "1851.27",
-        #         "volume": "0.542"
-        #     }
-        #     ]
-        # },
-        # "timestamp": 1691649271544
-        # }
-        response = self.publicGetMarketKlines(self.extend(request, params))
-        data = self.safe_dict(response, 'data', {})
-        klines = self.safe_value(data, 'klines', [])
-        return self.parse_ohlcvs(klines, market, timeframe, since, limit)
+    # def fetch_ohlcv(self, symbol: str, timeframe='1m', since: Int = None, limit: Int = None, params={}) -> List[list]:
+    #     self.load_markets()
+    #     market = self.market(symbol)
+    #     parsedTimeframe = self.safe_string(self.timeframes, timeframe)
+    #     request: dict = {
+    #         'symbol': market['symbol'],
+    #     }
+    #     if parsedTimeframe is not None:
+    #         request['interval'] = parsedTimeframe
+    #     else:
+    #         request['interval'] = timeframe
+    #     if limit is None:
+    #         limit = 100  # max = 500
+    #     else:
+    #         limit = min(500, limit)
+    #     # {
+    #     # "result": true,
+    #     # "data": {
+    #     #     "klines": [
+    #     #     {
+    #     #         "time": 1691649240000,
+    #     #         "open": "1851.27",
+    #     #         "close": "1851.32",
+    #     #         "high": "1851.32",
+    #     #         "low": "1851.27",
+    #     #         "volume": "0.542"
+    #     #     }
+    #     #     ]
+    #     # },
+    #     # "timestamp": 1691649271544
+    #     # }
+    #     response = self.publicGetMarketKlines(self.extend(request, params))
+    #     data = self.safe_dict(response, 'data', {})
+    #     klines = self.safe_value(data, 'klines', [])
+    #     return self.parse_ohlcvs(klines, market, timeframe, since, limit)
 
-    def parse_ohlcv(self, ohlcv, market: Market = None) -> list:
-        return [
-            self.safe_integer(ohlcv, 'time'),  # timestamp
-            self.safe_number(ohlcv, 'open'),  # open
-            self.safe_number(ohlcv, 'high'),  # high
-            self.safe_number(ohlcv, 'low'),  # low
-            self.safe_number(ohlcv, 'close'),  # close
-            self.safe_number(ohlcv, 'volume'),  # volume
-        ]
+    # def parse_ohlcv(self, ohlcv, market: Market = None) -> list:
+    #     return [
+    #         self.safe_integer(ohlcv, 'time'),  # timestamp
+    #         self.safe_number(ohlcv, 'open'),  # open
+    #         self.safe_number(ohlcv, 'high'),  # high
+    #         self.safe_number(ohlcv, 'low'),  # low
+    #         self.safe_number(ohlcv, 'close'),  # close
+    #         self.safe_number(ohlcv, 'volume'),  # volume
+    #     ]
 
-    def fetch_tickers(self, symbols: Strings = None, params={}) -> Tickers:
-        self.load_markets()
-        request: dict = {
-            'type': 'SPOT'
-        }
-        response = self.publicGetTickers(self.extend(request, params))
-        response2 = self.publicGetBookTickers(self.extend(request, params))
-        # { 
-        # "data": {
-        #     "tickers": [
-        #     {
-        #         "symbol": "BTC_USDT",
-        #         "time": 1545291675000,
-        #         "open": "7962.62",
-        #         "close": "7952.32",
-        #         "high": "7971.61",
-        #         "low": "7950.29",
-        #         "volume": "1.537",
-        #         "amount": "12032.56",
-        #         "count": 271585
-        #     },
-        #     {
-        #         "symbol": "ETH_USDT",
-        #         "time": 1545291675000,
-        #         "open": "1963.62",
-        #         "close": "1852.22",
-        #         "high": "1971.11",
-        #         "low": "1850.23",
-        #         "volume": "100.532",
-        #         "amount": "112012.51",
-        #         "count": 432211
-        #     }  
-        #     ]
-        # },
-        # "result": true,
-        # "timestamp": 1566691672311
-        # }
+    # def fetch_tickers(self, symbols: Strings = None, params={}) -> Tickers:
+    #     self.load_markets()
+    #     request: dict = {
+    #         'type': 'SPOT'
+    #     }
+    #     response = self.publicGetTickers(self.extend(request, params))
+    #     response2 = self.publicGetBookTickers(self.extend(request, params))
+    #     # { 
+    #     # "data": {
+    #     #     "tickers": [
+    #     #     {
+    #     #         "symbol": "BTC_USDT",
+    #     #         "time": 1545291675000,
+    #     #         "open": "7962.62",
+    #     #         "close": "7952.32",
+    #     #         "high": "7971.61",
+    #     #         "low": "7950.29",
+    #     #         "volume": "1.537",
+    #     #         "amount": "12032.56",
+    #     #         "count": 271585
+    #     #     },
+    #     #     {
+    #     #         "symbol": "ETH_USDT",
+    #     #         "time": 1545291675000,
+    #     #         "open": "1963.62",
+    #     #         "close": "1852.22",
+    #     #         "high": "1971.11",
+    #     #         "low": "1850.23",
+    #     #         "volume": "100.532",
+    #     #         "amount": "112012.51",
+    #     #         "count": 432211
+    #     #     }  
+    #     #     ]
+    #     # },
+    #     # "result": true,
+    #     # "timestamp": 1566691672311
+    #     # }
 
-        # { 
-        # "data": {
-        #     "tickers": [
-        #     ]
-        # },
-        # "result": true,
-        # "timestamp": 1566691672311
-        # }
-        data = self.safe_dict(response, 'data')
-        data2 = self.safe_dict(response2, 'data')
-        tickers = self.safe_list(data, 'tickers')
-        tickers2 = self.safe_list(data2, 'tickers')
-        tickersFinal = []
-        for ticker in tickers:
-            for ticker2 in tickers2:
-                if ticker2['symbol'] == ticker['symbol']:
-                    tickersFinal.append(ticker | ticker2)
-        return self.parse_tickers(tickers + tickers2, symbols)
+    #     # { 
+    #     # "data": {
+    #     #     "tickers": [
+    #     #     ]
+    #     # },
+    #     # "result": true,
+    #     # "timestamp": 1566691672311
+    #     # }
+    #     data = self.safe_dict(response, 'data')
+    #     data2 = self.safe_dict(response2, 'data')
+    #     tickers = self.safe_list(data, 'tickers')
+    #     tickers2 = self.safe_list(data2, 'tickers')
+    #     tickersFinal = []
+    #     for ticker in tickers:
+    #         for ticker2 in tickers2:
+    #             if ticker2['symbol'] == ticker['symbol']:
+    #                 tickersFinal.append(ticker | ticker2)
+    #     return self.parse_tickers(tickers + tickers2, symbols)
 
     def parse_ticker(self, ticker: dict, market: Market = None) -> Ticker:
         timestamp = self.safe_number(ticker, 'time')
