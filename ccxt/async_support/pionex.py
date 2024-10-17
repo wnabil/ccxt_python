@@ -257,8 +257,8 @@ class pionex(Exchange, ImplicitAPI):
         type = self.safe_string_lower(market, 'type')
         spot = type == 'spot'
         return {
-            'id': baseId + '/' + quoteId,
-            'symbol': self.safe_string(market, 'symbol'),
+            'symbol': baseId + '/' + quoteId,
+            'id': self.safe_string(market, 'symbol'),
             'spot': spot,
             'type': type,
             'base': baseId,
@@ -310,7 +310,7 @@ class pionex(Exchange, ImplicitAPI):
         await self.load_markets()
         market = self.market(symbol)
         request: dict = {
-            'symbol': market['symbol'],
+            'symbol': market['id'],
         }
         if limit is not None:
             request['limit'] = min(limit, 500)  # default 100, max 500
@@ -372,7 +372,7 @@ class pionex(Exchange, ImplicitAPI):
             'info': trade,
             'id': self.safe_string_2(trade, 'tradeId', 'id'),
             'order': self.safe_string(trade, 'orderId'),
-            'symbol': self.safe_string(trade, 'symbol'),
+            'symbol': self.safe_string(trade, 'symbol').replace('_', '/'),
             'side': self.safe_string_lower(trade, 'side'),
             'type': self.safe_string_lower(trade, 'type'),
             'takerOrMaker': self.safe_string_lower(trade, 'role'),
@@ -400,7 +400,7 @@ class pionex(Exchange, ImplicitAPI):
         await self.load_markets()
         market = self.market(symbol)
         request: dict = {
-            'symbol': market['symbol'],
+            'symbol': market['id'],
         }
         if limit is not None:
             request['limit'] = min(limit, 1000)  # default 20, max 1000
@@ -427,7 +427,7 @@ class pionex(Exchange, ImplicitAPI):
         # "timestamp": 1566691672311
         # }
         orderBook = self.safe_dict(response, 'data')
-        return self.parse_order_book(orderBook, market['symbol'], None, 'bids', 'asks')
+        return self.parse_order_book(orderBook, market['id'], None, 'bids', 'asks')
 
     async def fetch_ohlcv(self, symbol: str, timeframe='1m', since: Int = None, limit: Int = None, params={}) -> List[list]:
         """
@@ -443,7 +443,7 @@ class pionex(Exchange, ImplicitAPI):
         await self.load_markets()
         market = self.market(symbol)
         request: dict = {
-            'symbol': market['symbol'],
+            'symbol': market['id'],
         }
         if timeframe is not None:
             request['timeframe'] = self.timeframes[timeframe]
@@ -572,7 +572,7 @@ class pionex(Exchange, ImplicitAPI):
         # }
         timestamp = self.safe_number(ticker, 'time')
         return self.safe_ticker({
-            'symbol': self.safe_string(ticker, 'symbol'),
+            'symbol': self.safe_string(ticker, 'symbol').replace('_', '/'),
             'timestamp': timestamp,
             'datetime': self.iso8601(timestamp),
             'high': self.safe_number(ticker, 'high'),
@@ -674,7 +674,7 @@ class pionex(Exchange, ImplicitAPI):
         await self.load_markets()
         market = self.market(symbol)
         request: dict = {
-            'symbol': market['symbol'],
+            'symbol': market['id'],
         }
         if limit is None:
             limit = 50  # max = 200
@@ -726,7 +726,7 @@ class pionex(Exchange, ImplicitAPI):
         await self.load_markets()
         market = self.market(symbol)
         request: dict = {
-            'symbol': market['symbol'],
+            'symbol': market['id'],
         }
         if limit is None:
             limit = 50  # max = 200
@@ -844,7 +844,7 @@ class pionex(Exchange, ImplicitAPI):
             'datetime': self.iso8601(timestamp),
             'lastTradeTimestamp': self.safe_number(order, 'updateTime'),
             'status': self.safe_string_lower(order, 'status'),
-            'symbol': self.safe_string(order, 'symbol'),
+            'symbol': self.safe_string(order, 'symbol').replace('_', '/'),
             'type': self.safe_string_lower(order, 'type'),
             'timeInForce': None,
             'postOnly': self.safe_bool(order, 'IOC'),
@@ -878,7 +878,7 @@ class pionex(Exchange, ImplicitAPI):
         await self.load_markets()
         market = self.market(symbol)
         request: dict = {
-            'symbol': symbol,
+            'symbol': market['id'],
         }
         response = self.privateGetTradeFills(self.extend(request, params))
         # {
@@ -979,10 +979,10 @@ class pionex(Exchange, ImplicitAPI):
         :param dict [params]: extra parameters specific to the exchange API endpoint
         :returns dict: An `order structure <https://docs.ccxt.com/#/?id=order-structure>`
         """
-        self.load_markets()
+        await self.load_markets()
         market = self.market(symbol)
         request: dict = {
-            'symbol': market['symbol'],
+            'symbol': market['id'],
             'orderId': id,
         }
         self.privateDeleteTradeOrder(self.extend(request, params))
@@ -990,7 +990,7 @@ class pionex(Exchange, ImplicitAPI):
         # "result": True,
         # "timestamp": 1566691672311
         # }
-        order = self.safe_order({'id': id, 'symbol': market['symbol'], 'info': {}}, market)
+        order = self.safe_order({'id': id, 'symbol': market['id'], 'info': {}}, market)
         return order
 
     async def cancel_all_orders(self, symbol: Str = None, params={}):
@@ -1001,17 +1001,17 @@ class pionex(Exchange, ImplicitAPI):
         :param dict [params]: extra parameters specific to the exchange API endpoint
         :returns dict[]: a list of `order structures <https://docs.ccxt.com/#/?id=order-structure>`
         """
-        self.load_markets()
+        await self.load_markets()
         market = self.market(symbol)
         request: dict = {
-            'symbol': symbol,
+            'symbol': market['id'],
         }
         self.privateDeleteTradeAllOrders(self.extend(request, params))
         #  {
         #  "result": True,
         #  "timestamp": 1566691672311
         #  }
-        order = self.safe_order({'symbol': market['symbol'], 'info': {}}, market)
+        order = self.safe_order({'symbol': market['id'], 'info': {}}, market)
         return [order]
 
     async def create_order(self, symbol: str, type: OrderType, side: OrderSide, amount: float, price: Num = None, params={}):
@@ -1026,11 +1026,11 @@ class pionex(Exchange, ImplicitAPI):
         :param dict [params]: extra parameters specific to the exchange API endpoint
         :returns dict: an `order structure <https://docs.ccxt.com/#/?id=order-structure>`
         """
-        self.load_markets()
+        await self.load_markets()
         market = self.market(symbol)
         clientOrderId = self.safe_string_2(params, 'client_order_id', 'clientOrderId', self.uuid())
         request: dict = {
-            'symbol': market['symbol'],
+            'symbol': market['id'],
             'side': side.upper(),
             'type': type.upper(),
             'amount': self.amount_to_precision(symbol, amount),
@@ -1075,9 +1075,8 @@ class pionex(Exchange, ImplicitAPI):
             ordersRequests.append(orderRequest)
         firstOrder = ordersRequests[0]
         firstSymbol = self.safe_string(firstOrder, 'symbol')
-        market = self.market(firstSymbol)
         request: dict = {
-            'symbol': market[firstSymbol],
+            'symbol': firstSymbol,
             'orders': ordersRequests,
         }
         response = self.privatePostTradeMassOrder(self.extend(request, params))
@@ -1140,7 +1139,7 @@ class pionex(Exchange, ImplicitAPI):
         request: dict = {
             'clientOrderId': clientOrderId,
             'side': side,
-            'symbol': market['symbol'],
+            'symbol': market['id'],
             'type': 'LIMIT',  # Only support LIMIT.
             'size': self.amount_to_precision(symbol, amount),
             'price': price,
