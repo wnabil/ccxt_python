@@ -22,7 +22,7 @@
 
 # ----------------------------------------------------------------------------
 
-__version__ = '4.4.12'
+__version__ = '4.4.19'
 
 # ----------------------------------------------------------------------------
 
@@ -174,6 +174,7 @@ from ccxt.p2b import p2b                                              # noqa: F4
 from ccxt.paradex import paradex                                      # noqa: F401
 from ccxt.paymium import paymium                                      # noqa: F401
 from ccxt.phemex import phemex                                        # noqa: F401
+from ccxt.pionex import pionex                                        # noqa: F401
 from ccxt.poloniex import poloniex                                    # noqa: F401
 from ccxt.poloniexfutures import poloniexfutures                      # noqa: F401
 from ccxt.probit import probit                                        # noqa: F401
@@ -191,10 +192,8 @@ from ccxt.xt import xt                                                # noqa: F4
 from ccxt.yobit import yobit                                          # noqa: F401
 from ccxt.zaif import zaif                                            # noqa: F401
 from ccxt.zonda import zonda                                          # noqa: F401
-from ccxt.pionex import pionex 
 
 exchanges = [
-    'pionex',
     'ace',
     'alpaca',
     'ascendex',
@@ -286,6 +285,7 @@ exchanges = [
     'paradex',
     'paymium',
     'phemex',
+    'pionex',
     'poloniex',
     'poloniexfutures',
     'probit',

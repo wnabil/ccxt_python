@@ -1,6 +1,6 @@
 # CCXT – CryptoCurrency eXchange Trading Library
 
-[![Build Status](https://img.shields.io/travis/com/ccxt/ccxt)](https://travis-ci.com/ccxt/ccxt) [![npm](https://img.shields.io/npm/v/ccxt.svg)](https://npmjs.com/package/ccxt) [![PyPI](https://img.shields.io/pypi/v/ccxt.svg)](https://pypi.python.org/pypi/ccxt) [![NPM Downloads](https://img.shields.io/npm/dy/ccxt.svg)](https://www.npmjs.com/package/ccxt) [![Discord](https://img.shields.io/discord/690203284119617602?logo=discord&logoColor=white)](https://discord.gg/ccxt) [![Supported Exchanges](https://img.shields.io/badge/exchanges-108-blue.svg)](https://github.com/ccxt/ccxt/wiki/Exchange-Markets) [![Twitter Follow](https://img.shields.io/twitter/follow/ccxt_official.svg?style=social&label=CCXT)](https://twitter.com/ccxt_official)
+[![Build Status](https://img.shields.io/travis/com/ccxt/ccxt)](https://travis-ci.com/ccxt/ccxt) [![npm](https://img.shields.io/npm/v/ccxt.svg)](https://npmjs.com/package/ccxt) [![PyPI](https://img.shields.io/pypi/v/ccxt.svg)](https://pypi.python.org/pypi/ccxt) [![NPM Downloads](https://img.shields.io/npm/dy/ccxt.svg)](https://www.npmjs.com/package/ccxt) [![Discord](https://img.shields.io/discord/690203284119617602?logo=discord&logoColor=white)](https://discord.gg/ccxt) [![Supported Exchanges](https://img.shields.io/badge/exchanges-109-blue.svg)](https://github.com/ccxt/ccxt/wiki/Exchange-Markets) [![Twitter Follow](https://img.shields.io/twitter/follow/ccxt_official.svg?style=social&label=CCXT)](https://twitter.com/ccxt_official)
 
 A JavaScript / Python / PHP / C# library for cryptocurrency trading and e-commerce with support for many bitcoin/ether/altcoin exchange markets and merchant APIs.
 
@@ -20,7 +20,6 @@ Current feature list:
 
 
 ## Sponsored Promotion
-[![bitmart-campaign](https://github-production-user-asset-6210df.s3.amazonaws.com/43336371/368140830-0148e114-a937-40b4-8cc3-f836ae1bfafe.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240917%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240917T111656Z&X-Amz-Expires=300&X-Amz-Signature=e2fcc2cec4c61cf400bbcc41af23efffbe8d2419841bb50fd11bafaf9b1b7d45&X-Amz-SignedHeaders=host&actor_id=43336371&key_id=0&repo_id=91253698)](https://www.bitmart.com/activity/BitMartxCCXT/en-US)
 
 ## See Also
 
@@ -58,7 +57,7 @@ Current feature list:
 
 ## Supported Cryptocurrency Exchanges
 
-The CCXT library currently supports the following 103 cryptocurrency exchange markets and trading APIs:
+The CCXT library currently supports the following 104 cryptocurrency exchange markets and trading APIs:
 
 | logo                                                                                                                                                                                             | id                    | name                                                                                         | ver                                                                                                                                              | type | certified                                                                                                                   | pro                                                                          |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|----------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------:|------|-----------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
@@ -148,6 +147,7 @@ The CCXT library currently supports the following 103 cryptocurrency exchange ma
 | [![paradex](https://github.com/user-attachments/assets/84628770-784e-4ec4-a759-ec2fbb2244ea)](https://app.paradex.trade/r/ccxt24)                                                                | paradex               | [Paradex](https://app.paradex.trade/r/ccxt24)                                                | [![API Version 1](https://img.shields.io/badge/1-lightgray)](https://docs.api.testnet.paradex.trade/)                                            | dex  |                                                                                                                             | [![CCXT Pro](https://img.shields.io/badge/CCXT-Pro-black)](https://ccxt.pro) |
 | [![paymium](https://user-images.githubusercontent.com/51840849/87153930-f0f02200-c2c0-11ea-9c0a-40337375ae89.jpg)](https://www.paymium.com/page/sign-up?referral=eDAzPoRQFMvaAB8sf-qj)           | paymium               | [Paymium](https://www.paymium.com/page/sign-up?referral=eDAzPoRQFMvaAB8sf-qj)                | [![API Version 1](https://img.shields.io/badge/1-lightgray)](https://github.com/Paymium/api-documentation)                                       | cex  |                                                                                                                             |                                                                              |
 | [![phemex](https://user-images.githubusercontent.com/1294454/85225056-221eb600-b3d7-11ea-930d-564d2690e3f6.jpg)](https://phemex.com/register?referralCode=EDNVJ)                                 | phemex                | [Phemex](https://phemex.com/register?referralCode=EDNVJ)                                     | [![API Version 1](https://img.shields.io/badge/1-lightgray)](https://github.com/phemex/phemex-api-docs)                                          | cex  |                                                                                                                             | [![CCXT Pro](https://img.shields.io/badge/CCXT-Pro-black)](https://ccxt.pro) |
+| [![pionex](undefined)](https://www.pionex.com/)                                                                                                                                                  | pionex                | [Pionex](https://www.pionex.com/)                                                            | [![API Version 1](https://img.shields.io/badge/1-lightgray)](https://pionex-doc.gitbook.io/apidocs)                                              | cex  |                                                                                                                             |                                                                              |
 | [![poloniex](https://user-images.githubusercontent.com/1294454/27766817-e9456312-5ee6-11e7-9b3c-b628ca5626a5.jpg)](https://poloniex.com/signup?c=UBFZJRPJ)                                       | poloniex              | [Poloniex](https://poloniex.com/signup?c=UBFZJRPJ)                                           | [![API Version *](https://img.shields.io/badge/*-lightgray)](https://api-docs.poloniex.com/spot/)                                                | cex  |                                                                                                                             | [![CCXT Pro](https://img.shields.io/badge/CCXT-Pro-black)](https://ccxt.pro) |
 | [![poloniexfutures](https://user-images.githubusercontent.com/1294454/27766817-e9456312-5ee6-11e7-9b3c-b628ca5626a5.jpg)](https://poloniex.com/signup?c=UBFZJRPJ)                                | poloniexfutures       | [Poloniex Futures](https://poloniex.com/signup?c=UBFZJRPJ)                                   | [![API Version 1](https://img.shields.io/badge/1-lightgray)](https://api-docs.poloniex.com/futures/)                                             | cex  |                                                                                                                             | [![CCXT Pro](https://img.shields.io/badge/CCXT-Pro-black)](https://ccxt.pro) |
 | [![probit](https://user-images.githubusercontent.com/51840849/79268032-c4379480-7ea2-11ea-80b3-dd96bb29fd0d.jpg)](https://www.probit.com/r/34608773)                                             | probit                | [ProBit](https://www.probit.com/r/34608773)                                                  | [![API Version 1](https://img.shields.io/badge/1-lightgray)](https://docs-en.probit.com)                                                         | cex  |                                                                                                                             | [![CCXT Pro](https://img.shields.io/badge/CCXT-Pro-black)](https://ccxt.pro) |
@@ -222,13 +222,13 @@ console.log(version, Object.keys(exchanges));
 
 All-in-one browser bundle (dependencies included), served from a CDN of your choice:
 
-* jsDelivr: https://cdn.jsdelivr.net/npm/ccxt@4.4.12/dist/ccxt.browser.min.js
-* unpkg: https://unpkg.com/ccxt@4.4.12/dist/ccxt.browser.min.js
+* jsDelivr: https://cdn.jsdelivr.net/npm/ccxt@4.4.19/dist/ccxt.browser.min.js
+* unpkg: https://unpkg.com/ccxt@4.4.19/dist/ccxt.browser.min.js
 
 CDNs are not updated in real-time and may have delays. Defaulting to the most recent version without specifying the version number is not recommended. Please, keep in mind that we are not responsible for the correct operation of those CDN servers.
 
 ```HTML
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ccxt@4.4.12/dist/ccxt.browser.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ccxt@4.4.19/dist/ccxt.browser.min.js"></script>
 ```
 
 Creates a global `ccxt` object:

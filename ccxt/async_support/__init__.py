@@ -4,7 +4,7 @@
 
 # -----------------------------------------------------------------------------
 
-__version__ = '4.4.12'
+__version__ = '4.4.19'
 
 # -----------------------------------------------------------------------------
 
@@ -154,6 +154,7 @@ from ccxt.async_support.p2b import p2b                                          
 from ccxt.async_support.paradex import paradex                                  # noqa: F401
 from ccxt.async_support.paymium import paymium                                  # noqa: F401
 from ccxt.async_support.phemex import phemex                                    # noqa: F401
+from ccxt.async_support.pionex import pionex                                    # noqa: F401
 from ccxt.async_support.poloniex import poloniex                                # noqa: F401
 from ccxt.async_support.poloniexfutures import poloniexfutures                  # noqa: F401
 from ccxt.async_support.probit import probit                                    # noqa: F401
@@ -264,6 +265,7 @@ exchanges = [
     'paradex',
     'paymium',
     'phemex',
+    'pionex',
     'poloniex',
     'poloniexfutures',
     'probit',
